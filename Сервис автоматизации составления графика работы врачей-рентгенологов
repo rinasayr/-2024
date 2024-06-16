@@ -1,0 +1,38 @@
+# Предположим, что у нас есть список врачей и их рабочих часов 
+doctors = [ 
+    {"name": "Доктор 1", "hours": 8}, 
+    {"name": "Доктор 2", "hours": 6}, 
+    {"name": "Доктор 3", "hours": 7} 
+] 
+ 
+# Функция для распределения работы врачей на дни 
+def generate_schedule(doctors): 
+    schedule = {} 
+    day = 1 
+ 
+    for doctor in doctors: 
+        hours_left = doctor["hours"] 
+ 
+        while hours_left > 0: 
+            if day not in schedule: 
+                schedule[day] = [] 
+ 
+            if hours_left >= 4: 
+                schedule[day].append(f"{doctor['name']} - 4 ч.") 
+                hours_left -= 4 
+            else: 
+                schedule[day].append(f"{doctor['name']} - {hours_left} ч.") 
+                hours_left = 0 
+ 
+            day += 1 
+            if day > 7: 
+                day = 1 
+ 
+    return schedule 
+ 
+# Генерируем график работы 
+schedule = generate_schedule(doctors) 
+ 
+# Выводим результат 
+for day, shifts in schedule.items(): 
+    print(f"День {day}: {', '.join(shifts)}")
